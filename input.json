@@ -1,0 +1,33 @@
+[
+    {
+        "name": "Kelly Doe",
+        "email": "kdoe@example.com",
+        "id": 12324,
+        "phone": "5551234567"
+    },
+    {
+        "name": "Kelly Doe",
+        "email": "kdoe@example.com",
+        "id": 12324,
+        "type": true,
+        "phone": "5551234567"
+    },
+    {
+        "name": "Kelly Doe",
+        "email": "kdoe@example.com",
+        "id": 12324,
+        "phone": "5551234567"
+    },
+    {
+        "name": "Kelly Doe",
+        "email": "kdoe@example.com",
+        "id": 12324,
+        "phone": "5551234567"
+    },
+    {
+        "name": "Kelly Doe",
+        "email": "kdoe@example.com",
+        "id": 12324,
+        "phone": "5551234567"
+    }
+]
