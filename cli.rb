@@ -2,12 +2,6 @@
 
 require 'JSON'
 
-
-
-inputFile = File.open("input.json")
-inputData = JSON.parse(inputFile.read())
-inputFile.close()
-
 def sensitiveKeys
     sensativeKeysFile = File.open("sensative.txt")
     sensitiveKeysArr = sensativeKeysFile.read().split("\n")
@@ -15,16 +9,16 @@ def sensitiveKeys
     return bySensitiveKeys
 end
 
-def processValue(value) 
+def processRecord(value) 
     if value.class == Hash
-        scrub(value, value)
+        scrub(value)
         return
     end
 
     if value.class == Array
         updatedRecords = [];
         value.each do |item|   
-            updatedItem = processRecord(item)
+            updatedItem = processValue(item)
             updatedRecords.push(updatedItem)
         end
         return updatedRecords
@@ -32,12 +26,12 @@ def processValue(value)
 
     if value != nil
         if !!value  == value || value.class == String || value.class == Fixnum
-            return processRecord(value)
+            return processValue(value)
         end             
     end
 end
 
-def processRecord(value)
+def processValue(value)
         if !!value  == value 
             return "-"
         elsif value.class == String || value.class == Fixnum
@@ -52,11 +46,15 @@ def scrub (jsonBlock, updatedJson)
         updatedVal = value
         bySensitiveKeys = sensitiveKeys
         if bySensitiveKeys.has_key?(key)
-            updatedVal = processValue value
+            updatedVal = processRecord value
         end
         updatedJson[key] = updatedVal; 
     }
 end
+
+inputFile = File.open("input.json")
+inputData = JSON.parse(inputFile.read())
+inputFile.close()
 
 outputJson = [];
 inputData.each { |jsonBlock|
@@ -65,12 +63,7 @@ inputData.each { |jsonBlock|
     outputJson.push(updatedJson)
 }
 
-puts outputJson;
-
-
-
-
-
-
-# # puts outputJson;
+File.open("output.json","w") do |f|
+    f.write(outputJson.to_json)
+  end
 
