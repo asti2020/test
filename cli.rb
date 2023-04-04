@@ -15,34 +15,48 @@ def sensitiveKeys
     return bySensitiveKeys
 end
 
+def processValue(value) 
+    if value.class == Hash
+        scrub(value, value)
+        return
+    end
+
+    if value.class == Array
+        updatedRecords = [];
+        value.each do |item|   
+            updatedItem = processRecord(item)
+            updatedRecords.push(updatedItem)
+        end
+        return updatedRecords
+    end
+
+    if value != nil
+        if !!value  == value || value.class == String || value.class == Fixnum
+            return processRecord(value)
+        end             
+    end
+end
+
+def processRecord(value)
+        if !!value  == value 
+            return "-"
+        elsif value.class == String || value.class == Fixnum
+            return value.to_s.gsub(/[a-z0-9]/i, "*") 
+        end              
+
+    return value
+end
+
 def scrub (jsonBlock, updatedJson) 
     jsonBlock.each { | key, value|
-        updatedVal = value 
+        updatedVal = value
         bySensitiveKeys = sensitiveKeys
         if bySensitiveKeys.has_key?(key)
-            if value.class == Hash
-                scrub(value, value)
-                next
-            end
-
-            if value.class == Array
-                
-
-            if value != nil
-                if !!value  == value 
-                    updatedVal = "-"
-                elsif updatedVal.class == String || updatedVal.class == Fixnum
-                    updatedVal = value.to_s.gsub(/[a-z0-9]/i, "*")
-                end                
-            end
-        end  
-
+            updatedVal = processValue value
+        end
         updatedJson[key] = updatedVal; 
     }
 end
-    
-    
-
 
 outputJson = [];
 inputData.each { |jsonBlock|

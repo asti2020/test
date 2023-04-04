@@ -1,4 +1,5 @@
 name
 email
-id
+phone
 type
+location

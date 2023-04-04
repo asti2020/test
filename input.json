@@ -10,6 +10,7 @@
         "email": "kdoe@example.com",
         "id": 12324,
         "type": true,
+        "location": ["lat", "long"],
         "phone": "5551234567"
     },
     {
